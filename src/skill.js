@@ -2,7 +2,7 @@
 
 var APP_ID = 'amzn1.ask.skill.5ee6ea15-66bb-45b0-8b0a-32c2eaa6a5fc';
 
-var ANSWER_COUNT = 3,
+var ANSWER_COUNT = 4,
     GAME_LENGTH = 5,
     GAME_STATES = {
         TRIVIA: "_TRIVIAMODE", // Asking trivia questions.
@@ -18,11 +18,10 @@ var languageString = {
             'QUESTIONS' : questions['QUESTIONS_EN_US'],
             'GAME_NAME' : 'Fotball Soccer trivia',
             'HELP_MESSAGE': 'Hello this is a Soccer trivia multiple choice questions. Are you ready? ' +
-            'Please response with the number of the answer. ' +
-            'For example, say one, two, three, or four. To start a new game at any time, say, start game. ',
+            'Please response with the number of the answer or the response. To start a new game at any time, say, start game. ',
             'REPEAT_QUESTION_MESSAGE': 'To repeat the last question, say, repeat. ',
             'ASK_MESSAGE_START': 'Would you like to start playing?',
-            'HELP_REPROMPT': 'To give an answer to a question, respond with the number of the answer. ',
+            'HELP_REPROMPT': 'To give an answer to a question, respond with the number of the answer. Or you can say which answer is correct ',
             'STOP_MESSAGE': 'Would you like to keep playing?',
             'CANCEL_MESSAGE': 'Ok, let\'s play again soon.',
             'NO_MESSAGE': 'Ok, we\'ll play another time. Goodbye!',
@@ -30,8 +29,7 @@ var languageString = {
             'HELP_UNHANDLED': 'Say yes to continue, or no to end the game.',
             'START_UNHANDLED': 'Say start to start a new game.',
             'NEW_GAME_MESSAGE': 'Welcome to %s. ',
-            'WELCOME_MESSAGE': 'I will ask you %s questions, try to get as many right as you can. ' +
-            'Just say the number of the answer. Let\'s begin. ',
+            'WELCOME_MESSAGE': 'I will ask you %s questions, try to get as many right as you can. Let\'s begin. ',
             'ANSWER_CORRECT_MESSAGE': 'correct. ',
             'ANSWER_WRONG_MESSAGE': 'wrong. ',
             'CORRECT_ANSWER_MESSAGE': 'The correct answer is %s: %s. ',
