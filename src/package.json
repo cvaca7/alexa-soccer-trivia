@@ -1,0 +1,27 @@
+{
+  "name": "skill-nodejs-soccer",
+  "version": "1.0.0",
+  "description": "This is my first skill on alexa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "skill",
+    "alexa",
+    "nodejs",
+    "amazon",
+    "lambda"
+  ],
+  "author": "Carlos A. Vaca Morales",
+  "license": "ISC",
+  "dependencies": {
+    "alexa-sdk": "^1.0.7",
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
