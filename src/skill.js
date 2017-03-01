@@ -3,7 +3,7 @@
 var APP_ID = 'amzn1.ask.skill.5ee6ea15-66bb-45b0-8b0a-32c2eaa6a5fc';
 
 var ANSWER_COUNT = 4,
-    GAME_LENGTH = 5,
+    GAME_LENGTH = 10,
     GAME_STATES = {
         TRIVIA: "_TRIVIAMODE", // Asking trivia questions.
         START: "_STARTMODE", // Entry point, start the game.
@@ -106,6 +106,8 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
             "correctAnswerText": translatedQuestions[gameQuestions[currentQuestionIndex]][Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0]][0]
         });
 
+        console.log(this.attributes);
+
         // Set the current state to trivia mode. The skill will now use handlers defined in triviaStateHandlers
         this.handler.state = GAME_STATES.TRIVIA;
         this.emit(":askWithCard", speechOutput, repromptText, this.t("GAME_NAME"), repromptText);
@@ -195,6 +197,8 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
 
 
 function handleUserGuess(userGaveUp) {
+    //console.log(this.attributes);
+
     var answerSlotValid = isAnswerSlotValid(this.event.request.intent);
     var speechOutput = "";
     var speechOutputAnalysis = "";
@@ -205,6 +209,42 @@ function handleUserGuess(userGaveUp) {
     var correctAnswerText = this.attributes.correctAnswerText;
     var translatedQuestions = this.t("QUESTIONS");
 
+    //Set output analysis message
+    if(answerSlotValid){
+        var _slots = this.event.request.intent.slots;
+
+        //default is wrong
+        speechOutputAnalysis = this.t("ANSWER_WRONG_MESSAGE");
+
+        //Validation number
+        if(_slots.Number.value){
+            var val = parseInt(_slots.Number.value);
+            if(  (val < (ANSWER_COUNT + 1))  && (val == this.attributes['correctAnswerIndex']) || (val == this.attributes['correctAnswerText']) ) {
+                currentScore++;
+                speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
+            }
+        }
+        //Validate Person names
+        else if( _slots.Person.value == this.attributes['correctAnswerText']){
+            currentScore++;
+            speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
+        }
+        //Validate Country
+        else if( _slots.Country.value == this.attributes['correctAnswerText']){
+            currentScore++;
+            speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
+        }
+
+    }
+    else{
+        if (!userGaveUp) {
+            speechOutputAnalysis = this.t("ANSWER_WRONG_MESSAGE");
+        }
+
+        speechOutputAnalysis += this.t("CORRECT_ANSWER_MESSAGE", correctAnswerIndex, correctAnswerText);
+    }
+
+    /*
     if (answerSlotValid && parseInt(this.event.request.intent.slots.Answer.value) == this.attributes["correctAnswerIndex"]) {
         currentScore++;
         speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
@@ -215,6 +255,7 @@ function handleUserGuess(userGaveUp) {
 
         speechOutputAnalysis += this.t("CORRECT_ANSWER_MESSAGE", correctAnswerIndex, correctAnswerText);
     }
+    */
 
     // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
     if (this.attributes["currentQuestionIndex"] == GAME_LENGTH - 1) {
@@ -248,7 +289,9 @@ function handleUserGuess(userGaveUp) {
         });
 
         this.emit(":askWithCard", speechOutput, repromptText, this.t("GAME_NAME"), repromptText);
+        console.log(this.attributes);
     }
+
 }
 
 function populateGameQuestions(translatedQuestions) {
@@ -314,14 +357,31 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
 }
 
 function isAnswerSlotValid(intent) {
-    console.log(intent);
-    console.log(intent.slots);
-    console.log(intent.slots.Answer);
-    console.log(intent.slots.Answer.value);
 
-    var answerSlotFilled = intent && intent.slots && intent.slots.Answer && intent.slots.Answer.value;
-    var answerSlotIsInt = answerSlotFilled && !isNaN(parseInt(intent.slots.Answer.value));
-    return answerSlotIsInt && parseInt(intent.slots.Answer.value) < (ANSWER_COUNT + 1) && parseInt(intent.slots.Answer.value) > 0;
+    console.log('intent', intent);
+
+    //Must be an AnswerIntent, if not, should not be here
+    if(intent.name && intent.name != "AnswerIntent")
+        return false;
+
+    var valid = false;
+
+    //validate number
+    if(intent.slots.Number.value){
+       // var answerSlotIsInt = !isNaN(parseInt(intent.slots.Number.value));
+        //valid = answerSlotIsInt && parseInt(intent.slots.Number.value) < (ANSWER_COUNT + 1) && parseInt(intent.slots.Number.value) > 0;
+        valid = !isNaN(parseInt(intent.slots.Number.value));
+    }
+    //Validate person name
+    else if(intent.slots.Person.value){
+        valid = intent.slots.Person.value.length > 0;
+    }
+    else if(intent.slots.Country.value){
+        valid = intent.slots.Country.value.length > 0;
+    }
+
+
+    return valid;
 }
 
 

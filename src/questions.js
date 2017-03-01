@@ -13,8 +13,8 @@ module.exports = {
 		{
 			' Wich is the selection that has participated the most in the World Cups?' : [
 				'Brazil',
-				'Alemania',
-				'Itialia',
+				'Germany',
+				'Italy',
 				'Argentina',
 				'Nicaragua'
 			]
@@ -24,20 +24,20 @@ module.exports = {
 				'Nicaragua',
 				'El Salvador',
 				'Honduras',
-				'Republica Checa'
+				'Czech republic'
 			]
 		},
 		{
 			'Who is the World Cup top scorer?' : [
 				'Miroslav Klose',
-				'Luiz Ronaldo',
-				'Pelé',
+				'Luis Ronaldo',
+				'Pele',
 				'Gabriel Batistuta'
 			]
 		},
 		{
 			'Which team had more players with golden balls?' : [
-				'AC Milán',
+				'AC Milan',
 				'Real Madrid',
 				'Barcelona',
 				'Manchester United'
@@ -46,8 +46,8 @@ module.exports = {
 		{
 			'Which selections had won the most world cup?' : [
 				'Brazil',
-				'Alemania',
-				'Italia',
+				'Germany',
+				'Italy',
 				'Argentina',
 				'Uruguay'
 			]
