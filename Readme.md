@@ -1,1 +1,2 @@
-# This is my first skill on Alexa. This is going to be a soccer skill
+# alexa-soccer-trivia
+Alexa soccer trivia
