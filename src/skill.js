@@ -106,7 +106,9 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
             "correctAnswerText": translatedQuestions[gameQuestions[currentQuestionIndex]][Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0]][0]
         });
 
-        console.log(this.attributes);
+        console.log('question',this.attributes.speechOutput);
+        console.log('correctAnswerIndex',this.attributes.correctAnswerIndex);
+        console.log('correctAnswerText',this.attributes.correctAnswerText);
 
         // Set the current state to trivia mode. The skill will now use handlers defined in triviaStateHandlers
         this.handler.state = GAME_STATES.TRIVIA;
@@ -225,12 +227,12 @@ function handleUserGuess(userGaveUp) {
             }
         }
         //Validate Person names
-        else if( _slots.Person.value == this.attributes['correctAnswerText']){
+        else if( _slots.Person.value && _slots.Person.value.toLowerCase() == this.attributes['correctAnswerText'].toLowerCase()){
             currentScore++;
             speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
         }
         //Validate Country
-        else if( _slots.Country.value == this.attributes['correctAnswerText']){
+        else if( _slots.Country.value && _slots.Country.value.toLowerCase() == this.attributes['correctAnswerText'].toLowerCase()){
             currentScore++;
             speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
         }
@@ -289,7 +291,10 @@ function handleUserGuess(userGaveUp) {
         });
 
         this.emit(":askWithCard", speechOutput, repromptText, this.t("GAME_NAME"), repromptText);
-        console.log(this.attributes);
+
+        console.log('question',this.attributes.speechOutput);
+        console.log('correctAnswerIndex',this.attributes.correctAnswerIndex);
+        console.log('correctAnswerText',this.attributes.correctAnswerText);
     }
 
 }
