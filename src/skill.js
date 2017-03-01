@@ -314,6 +314,11 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
 }
 
 function isAnswerSlotValid(intent) {
+    console.log(intent);
+    console.log(intent.slots);
+    console.log(intent.slots.Answer);
+    console.log(intent.slots.Answer.value);
+
     var answerSlotFilled = intent && intent.slots && intent.slots.Answer && intent.slots.Answer.value;
     var answerSlotIsInt = answerSlotFilled && !isNaN(parseInt(intent.slots.Answer.value));
     return answerSlotIsInt && parseInt(intent.slots.Answer.value) < (ANSWER_COUNT + 1) && parseInt(intent.slots.Answer.value) > 0;
