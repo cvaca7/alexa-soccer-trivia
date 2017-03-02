@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 var alexaSkill = require('./skill');
 
 app
-    .use(bodyParser.urlencoded( { extended: false } ));
-    .use(bodyParser.json());
+    .use(bodyParser.urlencoded( { extended: false } ))
+    .use(bodyParser.json())
     .post('/', (request,response,next)  => {
         alexaSkill.handler( request.body,  {
             fail: next,
